@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import {AngularFireDatabase} from 'angularfire2/database-deprecated';
 
+import 'rxjs/add/operator/take';
+
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -11,7 +14,14 @@ export class AppComponent {
   constructor(
     private af: AngularFireDatabase
   ) {
-    this.af.object(`connected`)
-      .subscribe(console.log);
+    const observable = this.af.object(`connected`);
+
+    observable
+      .take(1)
+      .subscribe(
+        next => console.log( 'next', next ),
+        error => console.log( 'error', error ),
+        () => console.log( 'completed' )
+      );
   }
 }
