@@ -10,7 +10,7 @@ import 'rxjs/add/operator/take';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'app';
+
   constructor(
     private af: AngularFireDatabase
   ) {
