@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
-import {AngularFireDatabase, FirebaseObjectObservable} from 'angularfire2/database-deprecated';
+import {AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2/database-deprecated';
+import {Company} from '../models/company';
 
 @Injectable()
 export class CompanyService {
-  company$: FirebaseObjectObservable<any>;
+  company$: FirebaseObjectObservable<Company>;
+  private companies$: FirebaseListObservable<Company[]>;
 
   constructor(
     private af: AngularFireDatabase
   ) {
     this.company$ = this.af.object(`company`);
+    this.companies$ = this.af.list(`companies`);
   }
 
   saveCompany( company ) {
@@ -27,5 +30,9 @@ export class CompanyService {
     this.company$.remove()
       .then( _ => console.log('success'))
       .catch( error => console.log('error', error));
+  }
+
+  getCompanies(): FirebaseListObservable<Company[]> {
+    return this.companies$;
   }
 }
