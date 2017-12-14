@@ -26,4 +26,7 @@ export class CompanyEditComponent implements OnInit {
   updateCompany( company ) {
     this.companyService.updateCompany({phone: 123});
   }
+  removeCompany() {
+    this.companyService.removeCompany();
+  }
 }

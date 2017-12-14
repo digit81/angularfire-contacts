@@ -12,10 +12,20 @@ export class CompanyService {
   }
 
   saveCompany( company ) {
-    this.company$.set(company);
+    this.company$.set(company)
+      .then( _ => console.log('success'))
+      .catch( error => console.log('error', error));
   }
 
   updateCompany( company ) {
-    this.company$.update(company);
+    this.company$.update(company)
+      .then( _ => console.log('success'))
+      .catch( error => console.log('error', error));
+  }
+
+  removeCompany( ) {
+    this.company$.remove()
+      .then( _ => console.log('success'))
+      .catch( error => console.log('error', error));
   }
 }
