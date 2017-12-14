@@ -14,14 +14,14 @@ export class CompanyService {
     this.companies$ = this.af.list(`companies`);
   }
 
-  saveCompany( company ) {
-    this.company$.set(company)
-      .then( _ => console.log('success'))
-      .catch( error => console.log('error', error));
+  saveCompany( company: Company ) {
+    this.companies$.push(company)
+      .then( _ => console.log('success'));
+      // .catch( error => console.log('error', error));
   }
 
-  updateCompany( company ) {
-    this.company$.update(company)
+  updateCompany( company: Company ) {
+    this.companies$.update(company.$key, company)
       .then( _ => console.log('success'))
       .catch( error => console.log('error', error));
   }
@@ -34,5 +34,9 @@ export class CompanyService {
 
   getCompanies(): FirebaseListObservable<Company[]> {
     return this.companies$;
+  }
+
+  getCompany(companyKey: string) {
+    return this.af.object(`companies/${companyKey}`);
   }
 }

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {CompanyService} from '../company.service';
 import {FirebaseObjectObservable} from 'angularfire2/database-deprecated';
+import {Company} from '../../models/company';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-company-edit',
@@ -9,24 +11,35 @@ import {FirebaseObjectObservable} from 'angularfire2/database-deprecated';
 })
 export class CompanyEditComponent implements OnInit {
   company$: FirebaseObjectObservable<any>;
+  private companyKey: string;
+  isNewCompany: boolean;
 
   constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
     private companyService: CompanyService
-  ) {
-    this.company$ = this.companyService.company$;
-  }
+  ) {}
 
   ngOnInit() {
+    this.companyKey = this.activatedRoute.snapshot.params['id'];
+    this.isNewCompany = this.companyKey === 'new';
+    if ( !this.isNewCompany ) { this.getCompany(); }
   }
 
-  saveCompany( company ) {
-    this.companyService.saveCompany({name: company.name});
+  saveCompany( company: Company ) {
+    this.companyService.saveCompany(company);
   }
 
-  updateCompany( company ) {
-    this.companyService.updateCompany({phone: 123});
+  updateCompany( company: Company ) {
+    this.companyService.updateCompany(company);
   }
+
   removeCompany() {
     this.companyService.removeCompany();
+  }
+
+  private getCompany() {
+    this.company$ = this.companyService.getCompany( this.companyKey );
+
   }
 }
