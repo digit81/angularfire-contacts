@@ -1,1 +1,9 @@
-{{company$ | async | json}}
+<h1>Company Edit</h1>
+<mat-card *ngIf="company$ | async as company">
+  <mat-form-field >
+    <input matInput placeholder="Company name" [(ngModel)]="company.name">
+  </mat-form-field>
+  <mat-card-actions align="end">
+    <button mat-button (click)="saveCompany(company)">Save</button>
+  </mat-card-actions>
+</mat-card>

@@ -12,7 +12,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {AngularFireDatabaseModule} from 'angularfire2/database-deprecated';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatToolbarModule} from '@angular/material';
+import {MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatToolbarModule} from '@angular/material';
 import {CompanyEditComponent} from './company/company-edit/company-edit.component';
 import {CompanyService} from './company/company.service';
 
@@ -29,7 +29,11 @@ import {CompanyService} from './company/company.service';
     AngularFireDatabaseModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatCardModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatButtonModule
   ],
   providers: [ CompanyService ],
   bootstrap: [AppComponent]
