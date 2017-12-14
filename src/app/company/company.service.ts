@@ -14,4 +14,8 @@ export class CompanyService {
   saveCompany( company ) {
     this.company$.set(company);
   }
+
+  updateCompany( company ) {
+    this.company$.update(company);
+  }
 }
