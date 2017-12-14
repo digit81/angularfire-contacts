@@ -1,9 +1,11 @@
 <mat-toolbar color="primary">
-  <span>AngularFire2</span>
+  <div fxLayoutAlign="space-between center" class="nav-buttons">
+    <span>AngularFire2</span>
+    <button mat-button [routerLink]="['/company-list']">Companies</button>
+  </div>
 </mat-toolbar>
 <div>
   <div fxFlexOffset.gt-sm="15%" fxFlex.gt-sm="70%">
-    <app-company-edit></app-company-edit>
-    <!--<router-outlet></router-outlet>-->
+    <router-outlet></router-outlet>
   </div>
 </div>

@@ -15,14 +15,18 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatToolbarModule} from '@angular/material';
 import {CompanyEditComponent} from './company/company-edit/company-edit.component';
 import {CompanyService} from './company/company.service';
+import { CompanyListComponent } from './company/company-list/company-list.component';
+import {AppRoutingModule} from './app-routing.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CompanyEditComponent
+    CompanyEditComponent,
+    CompanyListComponent
   ],
   imports: [
     BrowserModule,
+    AppRoutingModule,
     FormsModule,
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebase),
