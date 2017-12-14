@@ -3,6 +3,8 @@ import {CompanyService} from '../company.service';
 import {FirebaseObjectObservable} from 'angularfire2/database-deprecated';
 import {Company} from '../../models/company';
 import {ActivatedRoute, Router} from '@angular/router';
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
 
 @Component({
   selector: 'app-company-edit',
@@ -10,7 +12,7 @@ import {ActivatedRoute, Router} from '@angular/router';
   styleUrls: ['./company-edit.component.scss']
 })
 export class CompanyEditComponent implements OnInit {
-  company$: FirebaseObjectObservable<any>;
+  company$: FirebaseObjectObservable<Company>;
   private companyKey: string;
   isNewCompany: boolean;
 
@@ -23,15 +25,13 @@ export class CompanyEditComponent implements OnInit {
   ngOnInit() {
     this.companyKey = this.activatedRoute.snapshot.params['id'];
     this.isNewCompany = this.companyKey === 'new';
-    if ( !this.isNewCompany ) { this.getCompany(); }
+    !this.isNewCompany ? this.getCompany() : this.assignNewCompany();
   }
 
   saveCompany( company: Company ) {
-    this.companyService.saveCompany(company);
-  }
-
-  updateCompany( company: Company ) {
-    this.companyService.updateCompany(company);
+    this.isNewCompany
+      ? this.companyService.saveCompany(company)
+      : this.companyService.updateCompany(company);
   }
 
   removeCompany() {
@@ -41,5 +41,9 @@ export class CompanyEditComponent implements OnInit {
   private getCompany() {
     this.company$ = this.companyService.getCompany( this.companyKey );
 
+  }
+
+  private assignNewCompany() {
+    this.company$ = Observable.of({}) as FirebaseObjectObservable<Company>;
   }
 }
