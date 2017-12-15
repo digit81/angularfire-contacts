@@ -30,8 +30,13 @@ export class ContactService {
       .catch( error => console.log('error', error));
   }
 
-  getContacts(): FirebaseListObservable<Contact[]> {
-    return this.contacts$;
+  getContacts(companyKey): FirebaseListObservable<Contact[]> {
+    return this.af.list(`contacts`,{
+      query: {
+        orderByChild: 'companyKey',
+        equalTo: companyKey
+      }
+    });
   }
 
   getContact(contactKey: string) {

@@ -24,7 +24,7 @@ export class ContactListComponent implements OnInit {
     this.getContacts();
   }
 
-  getContacts() {
-    this.contacts$ = this.contactService.getContacts();
+  getContacts(companyKey?: string) {
+    this.contacts$ = this.contactService.getContacts(companyKey);
   }
 }
