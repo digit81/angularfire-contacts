@@ -29,13 +29,16 @@ export class CompanyEditComponent implements OnInit {
   }
 
   saveCompany( company: Company ) {
-    this.isNewCompany
+    const save = this.isNewCompany
       ? this.companyService.saveCompany(company)
       : this.companyService.updateCompany(company);
+    save.then( _ => this.router.navigate(['/company-list']) );
+
   }
 
   removeCompany() {
-    this.companyService.removeCompany();
+    this.companyService.removeCompany( this.companyKey )
+      .then( _ => this.router.navigate(['/company-list']) );
   }
 
   private getCompany() {

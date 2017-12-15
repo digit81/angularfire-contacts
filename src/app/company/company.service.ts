@@ -4,30 +4,28 @@ import {Company} from '../models/company';
 
 @Injectable()
 export class CompanyService {
-  company$: FirebaseObjectObservable<Company>;
   private companies$: FirebaseListObservable<Company[]>;
 
   constructor(
     private af: AngularFireDatabase
   ) {
-    this.company$ = this.af.object(`company`);
     this.companies$ = this.af.list(`companies`);
   }
 
   saveCompany( company: Company ) {
-    this.companies$.push(company)
+    return this.companies$.push(company)
       .then( _ => console.log('success'));
       // .catch( error => console.log('error', error));
   }
 
   updateCompany( company: Company ) {
-    this.companies$.update(company.$key, company)
+    return this.companies$.update(company.$key, company)
       .then( _ => console.log('success'))
       .catch( error => console.log('error', error));
   }
 
-  removeCompany( ) {
-    this.company$.remove()
+  removeCompany( key: string ) {
+    return this.companies$.remove( key )
       .then( _ => console.log('success'))
       .catch( error => console.log('error', error));
   }
