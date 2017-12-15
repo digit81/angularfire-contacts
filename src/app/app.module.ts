@@ -12,7 +12,10 @@ import {HttpClientModule} from '@angular/common/http';
 import {AngularFireDatabaseModule} from 'angularfire2/database-deprecated';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule, MatCardModule, MatFormFieldModule, MatIconModule, MatInputModule, MatToolbarModule} from '@angular/material';
+import {
+  MatButtonModule, MatCardModule, MatFormFieldModule, MatIconModule, MatInputModule, MatSelectModule,
+  MatToolbarModule
+} from '@angular/material';
 
 import {AppRoutingModule} from './app-routing.module';
 import {CompanyEditComponent} from './company/company-edit/company-edit.component';
@@ -44,7 +47,8 @@ import {ContactListComponent} from './contact/contact-list/contact-list.componen
     MatInputModule,
     MatFormFieldModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatSelectModule
   ],
   providers: [ CompanyService, ContactService ],
   bootstrap: [AppComponent]

@@ -3,6 +3,13 @@
   <mat-form-field >
     <input matInput placeholder="Contact name" [(ngModel)]="contact.name">
   </mat-form-field>
+  <div *ngIf="!isNewContact">
+    <mat-select placeholder="Company" [(ngModel)]="contact.companyKey">
+      <mat-option *ngFor="let company of companies$ | async" [value]="company.$key">
+        {{ company.name }}
+      </mat-option>
+    </mat-select>
+  </div>
   <mat-card-actions align="end">
     <button mat-button (click)="saveContact(contact)">Save</button>
     <button mat-button (click)="removeContact()">Remove</button>

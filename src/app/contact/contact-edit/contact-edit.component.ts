@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {ContactService} from '../contact.service';
-import {FirebaseObjectObservable} from 'angularfire2/database-deprecated';
+import {FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2/database-deprecated';
 import {Contact} from '../../models/contact';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
+import {CompanyService} from '../../company/company.service';
+import {Company} from '../../models/company';
 
 @Component({
   selector: 'app-contact-edit',
@@ -15,14 +17,17 @@ export class ContactEditComponent implements OnInit {
   contact$: FirebaseObjectObservable<Contact>;
   private contactKey: string;
   isNewContact: boolean;
+  companies$: FirebaseListObservable<Company[]>;
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private contactService: ContactService
+    private contactService: ContactService,
+    private companyService: CompanyService
   ) {}
 
   ngOnInit() {
+    this.companies$ = this.companyService.getCompanies();
     this.contactKey = this.activatedRoute.snapshot.params['id'];
     this.isNewContact = this.contactKey === 'new';
     !this.isNewContact ? this.getContact() : this.assignNewContact();
