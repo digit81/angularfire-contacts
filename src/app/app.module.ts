@@ -13,16 +13,22 @@ import {AngularFireDatabaseModule} from 'angularfire2/database-deprecated';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule, MatCardModule, MatFormFieldModule, MatIconModule, MatInputModule, MatToolbarModule} from '@angular/material';
-import {CompanyEditComponent} from './company/company-edit/company-edit.component';
-import {CompanyService} from './company/company.service';
-import { CompanyListComponent } from './company/company-list/company-list.component';
+
 import {AppRoutingModule} from './app-routing.module';
+import {CompanyEditComponent} from './company/company-edit/company-edit.component';
+import {CompanyListComponent} from './company/company-list/company-list.component';
+import {CompanyService} from './company/company.service';
+import {ContactService} from './contact/contact.service';
+import {ContactEditComponent} from './contact/contact-edit/contact-edit.component';
+import {ContactListComponent} from './contact/contact-list/contact-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CompanyEditComponent,
-    CompanyListComponent
+    CompanyListComponent,
+    ContactEditComponent,
+    ContactListComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +46,7 @@ import {AppRoutingModule} from './app-routing.module';
     MatButtonModule,
     MatIconModule
   ],
-  providers: [ CompanyService ],
+  providers: [ CompanyService, ContactService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
