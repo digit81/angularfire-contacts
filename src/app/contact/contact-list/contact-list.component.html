@@ -2,6 +2,7 @@
   <h1>Contacts</h1>
   <div style="width: 200px">
     <mat-select placeholder="Company" (change)="getContacts($event.value)">
+      <mat-option [value]="undefined">All</mat-option>
       <mat-option *ngFor="let company of companies$ | async" [value]="company.$key">
         {{ company.name }}
       </mat-option>
