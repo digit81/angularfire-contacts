@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
-import {AngularFireDatabase} from 'angularfire2/database-deprecated';
-
-import 'rxjs/add/operator/take';
-
+import {AuthService} from './auth.service';
 
 @Component({
   selector: 'app-root',
@@ -12,16 +9,6 @@ import 'rxjs/add/operator/take';
 export class AppComponent {
 
   constructor(
-    private af: AngularFireDatabase
-  ) {
-    const observable = this.af.object(`connected`);
-
-    observable
-      .take(1)
-      .subscribe(
-        next => console.log( 'next', next ),
-        error => console.log( 'error', error ),
-        () => console.log( 'completed' )
-      );
-  }
+    public authService: AuthService
+  ) {}
 }
