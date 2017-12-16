@@ -24,7 +24,7 @@ import {CompanyService} from './company/company.service';
 import {ContactService} from './contact/contact.service';
 import {ContactEditComponent} from './contact/contact-edit/contact-edit.component';
 import {ContactListComponent} from './contact/contact-list/contact-list.component';
-import {AuthService} from './auth.service';
+import {AuthService} from './auth/auth.service';
 import {AngularFireAuthModule} from 'angularfire2/auth';
 import { HomeComponent } from './home/home.component';
 
