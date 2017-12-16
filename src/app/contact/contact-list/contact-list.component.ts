@@ -15,7 +15,7 @@ export class ContactListComponent implements OnInit {
   companies$: FirebaseListObservable<Company[]>;
 
   constructor(
-    private contactService: ContactService,
+    public contactService: ContactService,
     private companyService: CompanyService
   ) { }
 
@@ -24,7 +24,7 @@ export class ContactListComponent implements OnInit {
     this.getContacts();
   }
 
-  getContacts(companyKey?: string) {
-    this.contacts$ = this.contactService.getContacts(companyKey);
+  getContacts() {
+    this.contacts$ = this.contactService.getContacts();
   }
 }

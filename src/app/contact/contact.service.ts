@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import {AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2/database-deprecated';
 import {Contact} from '../models/contact';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class ContactService {
   private contacts$: FirebaseListObservable<Contact[]>;
+  public companyKey$ = new BehaviorSubject(undefined);
+
 
   constructor(
     private af: AngularFireDatabase
@@ -30,11 +33,11 @@ export class ContactService {
       .catch( error => console.log('error', error));
   }
 
-  getContacts(companyKey): FirebaseListObservable<Contact[]> {
-    return this.af.list(`contacts`,{
+  getContacts(): FirebaseListObservable<Contact[]> {
+    return this.af.list(`contacts`, {
       query: {
         orderByChild: 'companyKey',
-        equalTo: companyKey
+        equalTo: this.companyKey$
       }
     });
   }
