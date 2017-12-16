@@ -27,6 +27,7 @@ import {ContactListComponent} from './contact/contact-list/contact-list.componen
 import {AuthService} from './auth/auth.service';
 import {AngularFireAuthModule} from 'angularfire2/auth';
 import { HomeComponent } from './home/home.component';
+import {AuthGuard} from './auth/auth.guard';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,7 @@ import { HomeComponent } from './home/home.component';
     MatIconModule,
     MatSelectModule
   ],
-  providers: [ CompanyService, ContactService, AuthService ],
+  providers: [AuthGuard, CompanyService, ContactService, AuthService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

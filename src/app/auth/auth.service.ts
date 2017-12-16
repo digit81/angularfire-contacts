@@ -6,7 +6,7 @@ import * as firebase from 'firebase/app';
 
 @Injectable()
 export class AuthService {
-  user$: Observable<firebase.User | null>;
+  user$: Observable<firebase.User>;
 
   constructor(
     private router: Router,
