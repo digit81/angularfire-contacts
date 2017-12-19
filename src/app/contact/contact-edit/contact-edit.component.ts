@@ -17,7 +17,7 @@ export class ContactEditComponent implements OnInit {
   contact$: FirebaseObjectObservable<Contact>;
   private contactKey: string;
   isNewContact: boolean;
-  companies$: FirebaseListObservable<Company[]>;
+  companies$: Observable<Company[]>;
 
   constructor(
     private router: Router,

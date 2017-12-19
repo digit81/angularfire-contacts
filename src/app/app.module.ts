@@ -10,6 +10,8 @@ import {AngularFireModule} from 'angularfire2';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {AngularFireDatabaseModule} from 'angularfire2/database-deprecated';
+import {AngularFirestoreModule} from 'angularfire2/firestore';
+
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
@@ -45,6 +47,7 @@ import {AuthGuard} from './auth/auth.guard';
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
+    AngularFirestoreModule,
     AngularFireAuthModule,
     BrowserAnimationsModule,
     FlexLayoutModule,

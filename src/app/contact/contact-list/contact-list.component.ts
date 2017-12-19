@@ -4,6 +4,7 @@ import {FirebaseListObservable} from 'angularfire2/database-deprecated';
 import {Contact} from '../../models/contact';
 import {CompanyService} from '../../company/company.service';
 import {Company} from '../../models/company';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-contact-list',
@@ -12,7 +13,7 @@ import {Company} from '../../models/company';
 })
 export class ContactListComponent implements OnInit {
   contacts$: FirebaseListObservable<Contact[]>;
-  companies$: FirebaseListObservable<Company[]>;
+  companies$: Observable<Company[]>;
 
   constructor(
     public contactService: ContactService,
