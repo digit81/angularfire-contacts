@@ -14,19 +14,26 @@ export class CompanyService {
     private afs: AngularFirestore
   ) {
     this.companiesCollection = this.afs.collection(`companies`);
-    this.companies$ = this.companiesCollection.valueChanges();
+    this.companies$ = this.companiesCollection.snapshotChanges().map(companies => {
+      return companies.map(a => {
+        const data = a.payload.doc.data() as Company;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      });
+    });
   }
 
   saveCompany( company: Company ) {
-    // return this.companiesCollection.push(company)
-    //   .then( _ => console.log('success'));
-      // .catch( error => console.log('error', error));
+    return this.companiesCollection.add(company)
+      .then( _ => console.log('success'))
+      .catch( error => console.log('error', error));
   }
 
-  updateCompany( company: Company ) {
-    // return this.companies$.update(company.$key, company)
-    //   .then( _ => console.log('success'))
-    //   .catch( error => console.log('error', error));
+  updateCompany( companyID: string, company: Company ) {
+    console.log(company);
+    return this.companiesCollection.doc(companyID).update(company)
+      .then( _ => console.log('success'))
+      .catch( error => console.log('error', error));
   }
 
   removeCompany( key: string ) {
@@ -39,7 +46,8 @@ export class CompanyService {
     return this.companies$;
   }
 
-  getCompany(companyKey: string) {
-    return this.afs.doc(`companies/${companyKey}`);
+  getCompany(docId: string): Observable<Company> {
+    const document: AngularFirestoreDocument<Company> = this.afs.doc('companies/' + docId);
+    return document.valueChanges();
   }
 }

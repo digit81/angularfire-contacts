@@ -11,9 +11,9 @@ import 'rxjs/add/observable/of';
   styleUrls: ['./company-edit.component.scss']
 })
 export class CompanyEditComponent implements OnInit {
-  company$: Observable<Company>;
   private companyKey: string;
   isNewCompany: boolean;
+  private company$: Observable<Company>;
 
   constructor(
     private router: Router,
@@ -24,14 +24,16 @@ export class CompanyEditComponent implements OnInit {
   ngOnInit() {
     this.companyKey = this.activatedRoute.snapshot.params['id'];
     this.isNewCompany = this.companyKey === 'new';
+    console.log('ngOnInit', this.isNewCompany);
+
     !this.isNewCompany ? this.getCompany() : this.assignNewCompany();
   }
 
   saveCompany( company: Company ) {
-    // const save = this.isNewCompany
-    //   ? this.companyService.saveCompany(company)
-    //   : this.companyService.updateCompany(company);
-    // save.then( _ => this.router.navigate(['/company-list']) );
+    const save = this.isNewCompany
+      ? this.companyService.saveCompany(company)
+      : this.companyService.updateCompany(this.companyKey, company);
+    save.then( _ => this.router.navigate(['/company-list']) );
 
   }
 
@@ -41,11 +43,10 @@ export class CompanyEditComponent implements OnInit {
   }
 
   private getCompany() {
-    // this.company$ = this.companyService.getCompany( this.companyKey );
-
+    this.company$ = this.companyService.getCompany( this.companyKey );
   }
 
   private assignNewCompany() {
-    // this.company$ = Observable.of({}) as FirebaseObjectObservable<Company>;
+    this.company$ = Observable.of({}) as Observable<Company>;
   }
 }
