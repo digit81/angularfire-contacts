@@ -9,7 +9,6 @@ import { environment } from '../environments/environment';
 import {AngularFireModule} from 'angularfire2';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-import {AngularFireDatabaseModule} from 'angularfire2/database-deprecated';
 import {AngularFirestoreModule} from 'angularfire2/firestore';
 
 import {FlexLayoutModule} from '@angular/flex-layout';
@@ -46,7 +45,6 @@ import {AuthGuard} from './auth/auth.guard';
     FormsModule,
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebase, 'Contacts'),
-    AngularFireDatabaseModule,
     AngularFirestoreModule,
     AngularFireAuthModule,
     BrowserAnimationsModule,
