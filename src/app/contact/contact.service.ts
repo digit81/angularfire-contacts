@@ -1,48 +1,67 @@
 import { Injectable } from '@angular/core';
-import {AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2/database-deprecated';
 import {Contact} from '../models/contact';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {AngularFirestore, AngularFirestoreCollection} from 'angularfire2/firestore';
+import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class ContactService {
-  private contacts$: FirebaseListObservable<Contact[]>;
-  public companyKey$ = new BehaviorSubject(undefined);
+  public contacts$: Observable<Contact[]>;
+  public companyId$ = new BehaviorSubject(undefined);
+  private contactsCollection: AngularFirestoreCollection<Contact>;
 
 
   constructor(
-    private af: AngularFireDatabase
+    private afs: AngularFirestore
   ) {
-    this.contacts$ = this.af.list(`contacts`);
+    this.contactsCollection = this.afs.collection(`contacts`);
+    this.onSnapshotContacts();
+  }
+
+  onSnapshotContacts() {
+    this.contacts$ = this.contactsCollection.snapshotChanges().map(contacts => {
+      return contacts.map(a => {
+        const data = a.payload.doc.data() as Contact;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      });
+    });
+
   }
 
   saveContact( contact: Contact ) {
-    return this.contacts$.push(contact)
-      .then( _ => console.log('success'));
-      // .catch( error => console.log('error', error));
-  }
-
-  updateContact( contact: Contact ) {
-    return this.contacts$.update(contact.$key, contact)
+    return this.contactsCollection.add(contact)
       .then( _ => console.log('success'))
       .catch( error => console.log('error', error));
   }
 
-  removeContact( key: string ) {
-    return this.contacts$.remove( key )
+  updateContact( contactID: string, contact: Contact ) {
+    return this.contactsCollection.doc(contactID).update(contact)
       .then( _ => console.log('success'))
       .catch( error => console.log('error', error));
   }
 
-  getContacts(): FirebaseListObservable<Contact[]> {
-    return this.af.list(`contacts`, {
-      query: {
-        orderByChild: 'companyKey',
-        equalTo: this.companyKey$
-      }
-    });
+  removeContact( contactID: string ) {
+    return this.contactsCollection.doc(contactID).delete()
+      .then( _ => console.log('success'))
+      .catch( error => console.log('error', error));
   }
 
-  getContact(contactKey: string) {
-    return this.af.object(`contacts/${contactKey}`);
+  getContacts(): Observable<Contact[]> {
+    // return this.afs.collection(`contacts`, ref => {
+    //   let query : firebase.firestore.CollectionReference | firebase.firestore.Query = ref;
+    //   if (color) { query = query.where('color', '==', color) };
+    //   return query;
+    // }, {
+    //   query: {
+    //     orderByChild: 'companyKey',
+    //     equalTo: this.companyId$
+    //   }
+    // });
+    return this.contacts$;
+  }
+
+  getContact(docId: string): Observable<Contact> {
+    return this.afs.doc<Contact>(`contacts/${docId}`).valueChanges();
   }
 }

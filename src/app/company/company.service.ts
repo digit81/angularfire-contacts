@@ -5,8 +5,8 @@ import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class CompanyService {
-  private companies$: Observable<Company[]>;
   private companiesCollection: AngularFirestoreCollection<Company>;
+  private companies$: Observable<Company[]>;
 
   // private companies$: FirebaseListObservable<Company[]>;
 

@@ -1,9 +1,9 @@
 <div fxLayoutAlign="space-between center">
   <h1>Contacts</h1>
   <div style="width: 200px">
-    <mat-select placeholder="Company" (change)="contactService.companyKey$.next($event.value)" [value]="contactService.companyKey$ | async">
+    <mat-select placeholder="Company" (change)="contactService.companyId$.next($event.value)" [value]="contactService.companyId$ | async">
       <mat-option>All</mat-option>
-      <mat-option *ngFor="let company of companies$ | async" [value]="company.$key">
+      <mat-option *ngFor="let company of companies$ | async" [value]="company.id">
         {{ company.name }}
       </mat-option>
     </mat-select>
@@ -11,7 +11,7 @@
 </div>
 <mat-card *ngFor="let contact of contacts$ | async" fxLayoutAlign="space-between center">
   <span>{{contact.name}}</span>
-  <button mat-button [routerLink]="['/contact-edit', contact.$key]">Edit</button>
+  <button mat-button [routerLink]="['/contact-edit', contact.id]">Edit</button>
 </mat-card>
 
 <button mat-fab [routerLink]="['/contact-edit/new']"><mat-icon>add</mat-icon></button>

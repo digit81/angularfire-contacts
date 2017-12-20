@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {ContactService} from '../contact.service';
-import {FirebaseListObservable} from 'angularfire2/database-deprecated';
 import {Contact} from '../../models/contact';
 import {CompanyService} from '../../company/company.service';
 import {Company} from '../../models/company';
@@ -12,7 +11,7 @@ import {Observable} from 'rxjs/Observable';
   styleUrls: ['./contact-list.component.scss']
 })
 export class ContactListComponent implements OnInit {
-  contacts$: FirebaseListObservable<Contact[]>;
+  contacts$: Observable<Contact[]>;
   companies$: Observable<Company[]>;
 
   constructor(

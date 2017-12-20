@@ -1,5 +1,5 @@
 export interface Contact {
-  $key: string;
+  id: string;
   name: string;
   phone: string;
 }

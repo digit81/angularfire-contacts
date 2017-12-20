@@ -45,7 +45,7 @@ import {AuthGuard} from './auth/auth.guard';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireModule.initializeApp(environment.firebase, 'Contacts'),
     AngularFireDatabaseModule,
     AngularFirestoreModule,
     AngularFireAuthModule,
