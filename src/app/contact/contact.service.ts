@@ -15,18 +15,17 @@ export class ContactService {
     private afs: AngularFirestore
   ) {
     this.contactsCollection = this.afs.collection(`contacts`);
-    this.onSnapshotContacts();
+    // this.getSnapshot();
   }
 
-  onSnapshotContacts() {
-    this.contacts$ = this.contactsCollection.snapshotChanges().map(contacts => {
-      return contacts.map(a => {
+  getSnapshot() {
+    this.contacts$ = this.contactsCollection.snapshotChanges().map(actions => {
+      return actions.map(a => {
         const data = a.payload.doc.data() as Contact;
         const id = a.payload.doc.id;
         return { id, ...data };
       });
     });
-
   }
 
   saveContact( contact: Contact ) {
@@ -41,24 +40,45 @@ export class ContactService {
       .catch( error => console.log('error', error));
   }
 
+  getContacts(): Observable<Contact[]> {
+    return this.companyId$.switchMap( companyId => {
+      const collection = companyId ?
+        this.afs.collection<Contact>('contacts', ref => ref.where('companyKey', '==', companyId)) :
+        this.afs.collection<Contact>('contacts');
+
+      return collection.snapshotChanges().map(actions => {
+        return actions.map(a => {
+          const data = a.payload.doc.data() as Contact;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        });
+      });
+    });
+
+
+    // const collection = this.afs.collection<Contact>(`contacts`, ref => {
+    //   const companyId = this.companyId$.getValue();
+    //   if ( companyId ) {
+    //     ref.where('companyKey', '==', companyId);
+    //   }
+    //   ref.orderBy('name', 'desc');
+    //   return ref;
+    // });
+    // return collection.valueChanges();
+    // , {
+    //     query: {
+    //       orderByChild: 'companyKey',
+    //         equalTo: this.companyId$
+    //     }
+    //   }
+    // return this.contactsCollection.where()
+    // return this.contacts$;
+  }
+
   removeContact( contactID: string ) {
     return this.contactsCollection.doc(contactID).delete()
       .then( _ => console.log('success'))
       .catch( error => console.log('error', error));
-  }
-
-  getContacts(): Observable<Contact[]> {
-    // return this.afs.collection(`contacts`, ref => {
-    //   let query : firebase.firestore.CollectionReference | firebase.firestore.Query = ref;
-    //   if (color) { query = query.where('color', '==', color) };
-    //   return query;
-    // }, {
-    //   query: {
-    //     orderByChild: 'companyKey',
-    //     equalTo: this.companyId$
-    //   }
-    // });
-    return this.contacts$;
   }
 
   getContact(docId: string): Observable<Contact> {
