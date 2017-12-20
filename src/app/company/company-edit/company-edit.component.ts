@@ -24,8 +24,6 @@ export class CompanyEditComponent implements OnInit {
   ngOnInit() {
     this.companyKey = this.activatedRoute.snapshot.params['id'];
     this.isNewCompany = this.companyKey === 'new';
-    console.log('ngOnInit', this.isNewCompany);
-
     !this.isNewCompany ? this.getCompany() : this.assignNewCompany();
   }
 
