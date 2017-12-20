@@ -30,14 +30,14 @@ export class ContactService {
 
   saveContact( contact: Contact ) {
     return this.contactsCollection.add(contact)
-      .then( _ => console.log('success'))
-      .catch( error => console.log('error', error));
+      .then( _ => console.log('saveContact success'))
+      .catch( error => console.log('saveContact error', error));
   }
 
   updateContact( contactID: string, contact: Contact ) {
     return this.contactsCollection.doc(contactID).update(contact)
-      .then( _ => console.log('success'))
-      .catch( error => console.log('error', error));
+      .then( _ => console.log('updateContact success'))
+      .catch( error => console.log('updateContact error', error));
   }
 
   getContacts(): Observable<Contact[]> {
@@ -54,31 +54,12 @@ export class ContactService {
         });
       });
     });
-
-
-    // const collection = this.afs.collection<Contact>(`contacts`, ref => {
-    //   const companyId = this.companyId$.getValue();
-    //   if ( companyId ) {
-    //     ref.where('companyKey', '==', companyId);
-    //   }
-    //   ref.orderBy('name', 'desc');
-    //   return ref;
-    // });
-    // return collection.valueChanges();
-    // , {
-    //     query: {
-    //       orderByChild: 'companyKey',
-    //         equalTo: this.companyId$
-    //     }
-    //   }
-    // return this.contactsCollection.where()
-    // return this.contacts$;
   }
 
   removeContact( contactID: string ) {
     return this.contactsCollection.doc(contactID).delete()
-      .then( _ => console.log('success'))
-      .catch( error => console.log('error', error));
+      .then( _ => console.log('removeContact success'))
+      .catch( error => console.log('removeContact error', error));
   }
 
   getContact(docId: string): Observable<Contact> {
