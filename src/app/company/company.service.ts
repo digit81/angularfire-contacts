@@ -14,6 +14,11 @@ export class CompanyService {
     private afs: AngularFirestore
   ) {
     this.companiesCollection = this.afs.collection(`companies`);
+    // this.companiesCollection.onSnapshot(this.onSnapshotCompanies);
+    this.onSnapshotCompanies();
+  }
+
+  onSnapshotCompanies() {
     this.companies$ = this.companiesCollection.snapshotChanges().map(companies => {
       return companies.map(a => {
         const data = a.payload.doc.data() as Company;
@@ -36,10 +41,10 @@ export class CompanyService {
       .catch( error => console.log('error', error));
   }
 
-  removeCompany( key: string ) {
-    // return this.companies$.remove( key )
-    //   .then( _ => console.log('success'))
-    //   .catch( error => console.log('error', error));
+  removeCompany( companyID: string ) {
+    return this.companiesCollection.doc(companyID).delete()
+      .then( _ => console.log('success'))
+      .catch( error => console.log('error', error));
   }
 
   getCompanies(): Observable<Company[]> {

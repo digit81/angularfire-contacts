@@ -38,8 +38,8 @@ export class CompanyEditComponent implements OnInit {
   }
 
   removeCompany() {
-    // this.companyService.removeCompany( this.companyKey )
-    //   .then( _ => this.router.navigate(['/company-list']) );
+    this.companyService.removeCompany( this.companyKey )
+      .then( _ => this.router.navigate(['/company-list']) );
   }
 
   private getCompany() {
