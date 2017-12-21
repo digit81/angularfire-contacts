@@ -1,7 +1,22 @@
 <h1>Companies</h1>
-<mat-card *ngFor="let company of companies$ | async" fxLayoutAlign="space-between center">
-  <span>{{company.name}}</span>
-  <button mat-button [routerLink]="['/company-edit', company.id]">Edit</button>
-</mat-card>
+<div *ngIf="companies$ | async as companies; else loading">
+  <ng-container *ngIf="companies.length; else noItems">
+    <mat-card *ngFor="let company of companies" fxLayoutAlign="space-between center">
+      <span>{{company.name}}</span>
+      <button mat-button [routerLink]="['/company-edit', company.id]">Edit</button>
+    </mat-card>
+  </ng-container>
+  <ng-template #noItems>
+    <mat-card fxLayoutAlign="space-between center">
+      <span>No Items!</span>
+    </mat-card>
+  </ng-template>
+</div>
+<ng-template #loading>
+  <mat-card fxLayoutAlign="space-between center">
+    <span>Loading...</span>
+  </mat-card>
+</ng-template>
+
 
 <button mat-fab [routerLink]="['/company-edit/new']"><mat-icon>add</mat-icon></button>
