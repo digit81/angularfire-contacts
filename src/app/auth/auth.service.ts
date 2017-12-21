@@ -9,12 +9,18 @@ import {AngularFirestore, AngularFirestoreDocument} from 'angularfire2/firestore
 export class AuthService {
   user$: Observable<firebase.User>;
 
+  private uid: string;
+
+
   constructor(
     private router: Router,
     private afs: AngularFirestore,
     private afAuth: AngularFireAuth
   ) {
     this.user$ = this.afAuth.authState;
+    this.user$.subscribe( user => {
+      if (user) { this.uid = user.uid; }
+    });
   }
 
   googleLogin() {
@@ -103,6 +109,7 @@ export class AuthService {
   // }
   logout() {
     this.afAuth.auth.signOut();
+    this.uid = undefined;
     this.router.navigate([`/home`]);
   }
 
@@ -112,6 +119,8 @@ export class AuthService {
   private updateUserData(user: User, providerName: string) {
 
     const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
+
+    this.uid = user.uid;
 
     const data: User = {
       uid: user.uid,
@@ -128,4 +137,10 @@ export class AuthService {
     console.error(error);
     // this.notify.update(error.message, 'error');
   }
+
+  get userId() {
+    return this.uid;
+  }
+
+
 }

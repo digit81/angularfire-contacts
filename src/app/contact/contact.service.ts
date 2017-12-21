@@ -3,6 +3,9 @@ import {Contact} from '../models/contact';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {AngularFirestore, AngularFirestoreCollection} from 'angularfire2/firestore';
 import {Observable} from 'rxjs/Observable';
+import {AuthService} from '../auth/auth.service';
+import 'rxjs/add/operator/take';
+import 'rxjs/add/operator/do';
 
 @Injectable()
 export class ContactService {
@@ -12,7 +15,8 @@ export class ContactService {
 
 
   constructor(
-    private afs: AngularFirestore
+    private afs: AngularFirestore,
+    private auth: AuthService
   ) {
     this.contactsCollection = this.afs.collection(`contacts`);
     // this.getSnapshot();
@@ -29,12 +33,14 @@ export class ContactService {
   }
 
   saveContact( contact: Contact ) {
+    contact.userId = this.auth.userId;
     return this.contactsCollection.add(contact)
       .then( _ => console.log('saveContact success'))
       .catch( error => console.log('saveContact error', error));
   }
 
   updateContact( contactID: string, contact: Contact ) {
+    contact.userId = this.auth.userId;
     return this.contactsCollection.doc(contactID).update(contact)
       .then( _ => console.log('updateContact success'))
       .catch( error => console.log('updateContact error', error));
