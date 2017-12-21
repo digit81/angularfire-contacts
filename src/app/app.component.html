@@ -2,7 +2,7 @@
   <div fxLayoutAlign="space-between center" class="nav-buttons">
     <button mat-button [routerLink]="['/home']">AngularFire2</button>
     <div *ngIf="!(authService.user$ | async)?.uid">
-      <button mat-button (click)="authService.login()">Login</button>
+      <button mat-button (click)="authService.googleLogin()">Login</button>
     </div>
     <div *ngIf="(authService.user$ | async)?.uid">
       <button mat-button [routerLink]="['/company-list']">Companies</button>
